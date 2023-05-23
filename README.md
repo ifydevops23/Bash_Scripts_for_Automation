@@ -1,5 +1,5 @@
 # Bash_Scripts_for_Automation
-
+#!/bin/bash -x
 #Update the Ubuntu OS <br>
 sudo apt update <br>
 #Install Apache in non-interactive mode <br>
@@ -9,7 +9,7 @@ sudo apt install mysql-server -y <br>
 #Update root-user password <br>
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';" <br>
 #Login and test root user login <br>
-sudo mysql -u root -p password -e "SHOW DATABASES;" <br>
+sudo mysql -uroot -ppassword -e "SHOW DATABASES;" <br>
 #Install PHP, php-apache and php-mysql libraries and dependencies <br>
 sudo apt install php libapache2-mod-php php-mysql -y <br>
 #Check php version <br>
@@ -20,7 +20,9 @@ sudo mkdir /var/www/projectlamp <br>
 sudo chown -R $USER:$USER /var/www/projectlamp <br>
 
 #Copy configuration content into .../projectlamp.conf <br>
-```cat > /etc/apache2/sites-available/projectlamp.conf <<"EOF"
+
+```
+sudo cat > /etc/apache2/sites-available/projectlamp.conf <<"EOF"
 <VirtualHost *:80>
     ServerName projectlamp
     ServerAlias www.projectlamp 
@@ -41,7 +43,7 @@ sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/met
 
 #Change Direction Index to allow .php over .html <br>
 ```
-cat > /etc/apache2/mods-enabled/dir.conf <<"EOF"
+sudo cat > /etc/apache2/mods-enabled/dir.conf <<"EOF"
 <IfModule mod_dir.c>
         #Change this:
         #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
@@ -53,5 +55,5 @@ EOF
 
 sudo systemctl reload apache2 <br>
 
-echo "<?php
+sudo echo "<?php
 phpinfo();" > /var/www/projectlamp/index.php <br>
